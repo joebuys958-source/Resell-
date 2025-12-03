@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Resell Reserve – Inventory</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Resell Reserve – Inventory</h1>
+
+  <div class="form">
+    <input id="item-name" placeholder="Item name">
+    <input id="item-stock" type="number" placeholder="Stock">
+    <button onclick="addItem()">Add Item</button>
+  </div>
+
+  <h2>Current Inventory</h2>
+  <ul id="inventory-list"></ul>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
