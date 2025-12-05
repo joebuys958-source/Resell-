@@ -1,15 +1,9 @@
-const inv = JSON.parse(localStorage.getItem("inventory")) || [];
-const container = document.getElementById("inventory-container");
+let inventory = JSON.parse(localStorage.getItem("inventory")) || [];
 
-inv.forEach(item => {
-  const card = document.createElement("div");
-  card.className = "card";
+const list = document.getElementById("inventory-list");
 
-  card.innerHTML = `
-    <h2>${item.name}</h2>
-    <p>Brand: ${item.brand || "—"}</p>
-    <p>Purchase: £${item.price}</p>
-  `;
-
-  container.appendChild(card);
+inventory.forEach(item => {
+  const li = document.createElement("li");
+  li.textContent = `${item.name} — £${item.price}`;
+  list.appendChild(li);
 });
