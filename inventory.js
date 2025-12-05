@@ -1,10 +1,21 @@
-let items = load("inventory");
+document.addEventListener("DOMContentLoaded", () => {
+    const list = JSON.parse(localStorage.getItem("inventory")) || [];
+    const table = document.getElementById("inventory-body");
 
-let list = document.getElementById("inventory-list");
-list.innerHTML = "";
+    table.innerHTML = "";
 
-items.forEach((item, index) => {
-    let li = document.createElement("li");
-    li.textContent = `${item.name} - $${item.price}`;
-    list.appendChild(li);
+    list.forEach(item => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${item.name}</td>
+            <td>${item.brand}</td>
+            <td>${item.size}</td>
+            <td>£${item.purchasePrice}</td>
+            <td>${item.soldPrice ? "£" + item.soldPrice : "Not Sold"}</td>
+            <td>${item.soldPrice ? "Sold" : "In Stock"}</td>
+        `;
+
+        table.appendChild(row);
+    });
 });
