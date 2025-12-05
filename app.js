@@ -1,7 +1,9 @@
-function save(key, data) {
-    localStorage.setItem(key, JSON.stringify(data));
-}
+const inventory = JSON.parse(localStorage.getItem("inventory")) || [];
+const sold = JSON.parse(localStorage.getItem("soldItems")) || [];
 
-function load(key) {
-    return JSON.parse(localStorage.getItem(key)) || [];
-}
+document.getElementById("total-items").innerText = inventory.length;
+document.getElementById("total-sold").innerText = sold.length;
+
+let profit = 0;
+sold.forEach(i => profit += Number(i.salePrice) - Number(i.purchasePrice));
+document.getElementById("total-profit").innerText = "£" + profit;
