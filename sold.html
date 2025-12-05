@@ -1,29 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Sold Items</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sold Items</title>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="sold.js"></script>
 </head>
 
 <body>
+  <aside class="sidebar">
+    <h2 class="logo">RR</h2>
 
-<nav>
-    <h2>Resell Reserve</h2>
-    <div>
-        <a href="index.html">Home</a>
-        <a href="inventory.html">Inventory</a>
-        <a href="add.html">Add Item</a>
-        <a href="sold.html">Sold Items</a>
-    </div>
-</nav>
+    <nav>
+      <a href="index.html">🏠 Dashboard</a>
+      <a href="inventory.html">📦 Inventory</a>
+      <a href="add.html">➕ Add Item</a>
+      <a href="sold.html" class="active">💰 Sold Items</a>
+    </nav>
+  </aside>
 
-<div class="container">
+  <main class="content">
     <h1>Sold Items</h1>
-    <ul id="sold-list"></ul>
-</div>
 
-<script src="app.js"></script>
-<script src="sold.js"></script>
-
+    <div class="card-grid" id="sold-container"></div>
+  </main>
 </body>
 </html>
