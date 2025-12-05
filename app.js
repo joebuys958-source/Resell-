@@ -1,53 +1,29 @@
-// YOUR FIREBASE CONFIG HERE
-const firebaseConfig = {
-  apiKey: "YOUR_KEY",
-  authDomain: "YOUR_DOMAIN",
-  projectId: "YOUR_PROJECT",
-  storageBucket: "YOUR_BUCKET",
-  messagingSenderId: "YOUR_SENDER",
-  appId: "YOUR_APP_ID"
-};
+let inventory = JSON.parse(localStorage.getItem("inventory")) || [];
 
-import { initializeApp } from 
-  "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+function renderItems() {
+    const list = document.getElementById("inventory-list");
+    list.innerHTML = "";
 
-import { 
-  getFirestore, collection, addDoc,
-  onSnapshot, deleteDoc, doc 
-} from 
-  "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    inventory.forEach((item, index) => {
+        const li = document.createElement("li");
+        li.textContent = `${item.name} — Stock: ${item.stock}`;
+        list.appendChild(li);
+    });
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-const itemName = document.getElementById("item-name");
-const itemStock = document.getElementById("item-stock");
-const inventoryList = document.getElementById("inventory-list");
-
-async function addItem() {
-  if (!itemName.value || !itemStock.value) return;
-
-  await addDoc(collection(db, "inventory"), {
-    name: itemName.value,
-    stock: Number(itemStock.value)
-  });
-
-  itemName.value = "";
-  itemStock.value = "";
+    localStorage.setItem("inventory", JSON.stringify(inventory));
 }
 
-onSnapshot(collection(db, "inventory"), (snapshot) => {
-  inventoryList.innerHTML = "";
-  snapshot.forEach(docSnap => {
-    const li = document.createElement("li");
-    li.innerHTML = `
-      ${docSnap.data().name} (Stock: ${docSnap.data().stock})
-      <button onclick="deleteItem('${docSnap.id}')">Delete</button>
-    `;
-    inventoryList.appendChild(li);
-  });
-});
+function addItem() {
+    const name = document.getElementById("item-name").value;
+    const stock = document.getElementById("item-stock").value;
 
-async function deleteItem(id) {
-  await deleteDoc(doc(db, "inventory", id));
+    if (!name || !stock) return alert("Enter name + stock!");
+
+    inventory.push({ name, stock });
+    renderItems();
+
+    document.getElementById("item-name").value = "";
+    document.getElementById("item-stock").value = "";
 }
+
+renderItems();
