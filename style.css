@@ -1,106 +1,139 @@
-/* ---- GLOBAL ---- */
+/* GLOBAL */
 body {
-    margin: 0;
-    font-family: "Inter", sans-serif;
-    background: #0a0a0a;
-    color: #fff;
+  margin: 0;
+  display: flex;
+  background: #0a0a0a;
+  color: white;
+  font-family: "Inter", sans-serif;
 }
 
-/* ---- NAV ---- */
-nav {
-    background: #111;
-    border-bottom: 2px solid #e60000;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 40px;
-}
-
-nav h2 {
-    margin: 0;
-    color: #e60000;
-    font-weight: 700;
-    letter-spacing: 1px;
-}
-
-nav a {
-    margin-left: 25px;
-    text-decoration: none;
-    color: #ddd;
-    font-weight: 500;
-    transition: 0.2s;
-}
-
-nav a:hover {
-    color: #e60000;
-}
-
-/* ---- CONTAINER ---- */
-.container {
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 20px;
-    background: #151515;
-    border-radius: 12px;
-    border: 1px solid #222;
-}
-
-/* HEADERS */
 h1 {
-    margin-top: 0;
-    font-size: 28px;
-    border-left: 5px solid #e60000;
-    padding-left: 10px;
+  font-size: 2.2rem;
+  margin-bottom: 10px;
 }
 
-/* ---- TABLE ---- */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+.subtitle {
+  opacity: 0.8;
 }
 
-table thead {
-    background: #e60000;
-    color: white;
+/* SIDEBAR */
+.sidebar {
+  width: 230px;
+  background: #111;
+  height: 100vh;
+  padding: 20px;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  border-right: 2px solid #b00000;
 }
 
-table th, table td {
-    padding: 12px 14px;
-    text-align: left;
+.logo {
+  font-size: 2.3rem;
+  font-weight: bold;
+  color: #ff1a1a;
+  margin-bottom: 30px;
 }
 
-table tr {
-    background: #1a1a1a;
-    border-bottom: 1px solid #222;
+.sidebar nav a {
+  display: block;
+  color: white;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  text-decoration: none;
+  font-size: 1.05rem;
+  transition: 0.25s;
 }
 
-table tr:hover {
-    background: #222;
+.sidebar nav a:hover {
+  background: #b00000;
 }
 
-/* BUTTONS */
+.sidebar nav .active {
+  background: #ff1a1a;
+}
+
+/* MAIN AREA */
+.content {
+  margin-left: 250px;
+  padding: 40px;
+}
+
+/* DASHBOARD CARDS */
+.home-card {
+  margin-top: 20px;
+  background: #111;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #b00000;
+}
+
+.stats-grid {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.stat-box {
+  background: #1a1a1a;
+  padding: 20px;
+  border-radius: 10px;
+  flex: 1;
+  text-align: center;
+  font-size: 1.3rem;
+  border: 1px solid #ff1a1a;
+}
+
+/* INVENTORY CARDS */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: #111;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #b00000;
+  transition: 0.25s;
+}
+
+.card:hover {
+  transform: scale(1.03);
+  border-color: #ff1a1a;
+}
+
+/* FORM */
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  gap: 15px;
+}
+
+input,
 button {
-    background: #e60000;
-    border: none;
-    color: white;
-    padding: 8px 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: 0.25s;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+}
+
+input {
+  background: #1a1a1a;
+  color: white;
+  border: 1px solid #333;
+}
+
+button {
+  background: #e60000;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
 button:hover {
-    background: #b30000;
-}
-
-/* INPUTS */
-input, select {
-    width: 100%;
-    padding: 10px;
-    background: #0f0f0f;
-    color: white;
-    border: 1px solid #333;
-    border-radius: 6px;
-    margin: 6px 0 16px;
+  background: #ff1a1a;
 }
