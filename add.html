@@ -1,34 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Add Item</title>
-  <link rel="stylesheet" href="style.css" />
-  <script defer src="add.js"></script>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <aside class="sidebar">
-    <h2 class="logo">RR</h2>
 
-    <nav>
-      <a href="index.html">🏠 Dashboard</a>
-      <a href="inventory.html">📦 Inventory</a>
-      <a href="add.html" class="active">➕ Add Item</a>
-      <a href="sold.html">💰 Sold Items</a>
-    </nav>
-  </aside>
+<nav>
+  <h2>Resell Reserve</h2>
+  <a href="index.html">Home</a>
+  <a href="inventory.html">Inventory</a>
+  <a href="add.html">Add Item</a>
+  <a href="sold.html">Sold Items</a>
+</nav>
 
-  <main class="content">
-    <h1>Add New Item</h1>
+<div class="container">
+  <h1>Add New Item</h1>
 
-    <form class="form">
-      <input type="text" id="name" placeholder="Item name" required />
-      <input type="number" id="price" placeholder="Purchase Price (£)" required />
-      <input type="text" id="brand" placeholder="Brand (optional)" />
-      <button type="submit">Add Item</button>
-    </form>
-  </main>
+  <input id="name" placeholder="Item name">
+  <input id="price" placeholder="Purchase price (£)" type="number">
+  <input id="details" placeholder="Details (optional)">
+
+  <button onclick="addItem()">Add Item</button>
+</div>
+
+<script src="add.js"></script>
 </body>
 </html>
