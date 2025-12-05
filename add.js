@@ -1,13 +1,18 @@
-let items = load("inventory");
+const form = document.querySelector(".form");
 
-document.getElementById("add-btn").onclick = () => {
-    let name = document.getElementById("item-name").value;
-    let price = document.getElementById("item-price").value;
+form.addEventListener("submit", e => {
+  e.preventDefault();
 
-    if (!name || !price) return alert("Enter item name and price");
+  const item = {
+    name: document.getElementById("name").value,
+    price: document.getElementById("price").value,
+    brand: document.getElementById("brand").value,
+  };
 
-    items.push({ name, price });
-    save("inventory", items);
+  const inventory = JSON.parse(localStorage.getItem("inventory")) || [];
+  inventory.push(item);
+  localStorage.setItem("inventory", JSON.stringify(inventory));
 
-    alert("Item added!");
-};
+  alert("Item added!");
+  window.location.href = "inventory.html";
+});
