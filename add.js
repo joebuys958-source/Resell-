@@ -1,18 +1,24 @@
-const form = document.querySelector(".form");
+function addItem() {
+  let name = document.getElementById("name").value;
+  let price = document.getElementById("price").value;
+  let details = document.getElementById("details").value;
 
-form.addEventListener("submit", e => {
-  e.preventDefault();
+  if (name.trim() === "" || price === "") {
+    alert("Name and price are required.");
+    return;
+  }
 
-  const item = {
-    name: document.getElementById("name").value,
-    price: document.getElementById("price").value,
-    brand: document.getElementById("brand").value,
+  let item = {
+    name,
+    price,
+    details,
+    id: Date.now()
   };
 
-  const inventory = JSON.parse(localStorage.getItem("inventory")) || [];
+  let inventory = JSON.parse(localStorage.getItem("inventory")) || [];
   inventory.push(item);
   localStorage.setItem("inventory", JSON.stringify(inventory));
 
   alert("Item added!");
   window.location.href = "inventory.html";
-});
+}
