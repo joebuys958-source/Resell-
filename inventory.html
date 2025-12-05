@@ -1,29 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Inventory</title>
-  <link rel="stylesheet" href="style.css" />
-  <script defer src="inventory.js"></script>
+  <title>Your Inventory</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <aside class="sidebar">
-    <h2 class="logo">RR</h2>
 
-    <nav>
-      <a href="index.html">🏠 Dashboard</a>
-      <a href="inventory.html" class="active">📦 Inventory</a>
-      <a href="add.html">➕ Add Item</a>
-      <a href="sold.html">💰 Sold Items</a>
-    </nav>
-  </aside>
+<nav>
+  <h2>Resell Reserve</h2>
+  <a href="index.html">Home</a>
+  <a href="inventory.html">Inventory</a>
+  <a href="add.html">Add Item</a>
+  <a href="sold.html">Sold Items</a>
+</nav>
 
-  <main class="content">
-    <h1>Inventory</h1>
+<div class="container">
+  <h1>Your Inventory</h1>
+  <ul id="inventory-list"></ul>
+</div>
 
-    <div id="inventory-container" class="card-grid"></div>
-  </main>
+<script src="inventory.js"></script>
 </body>
 </html>
