@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Inventory</title>
+    <title>Your Inventory</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
 <nav>
@@ -19,11 +18,23 @@
 
 <div class="container">
     <h1>Your Inventory</h1>
-    <ul id="inventory-list"></ul>
+
+    <table id="inventory-table">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Brand</th>
+                <th>Size</th>
+                <th>Purchase</th>
+                <th>Sale</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id="inventory-body">
+        </tbody>
+    </table>
 </div>
 
-<script src="app.js"></script>
 <script src="inventory.js"></script>
-
 </body>
 </html>
