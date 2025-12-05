@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Resell Reserve – Inventory</title>
-  <link rel="stylesheet" href="style.css">
+    <title>Resell Reserve - Inventory</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <h1>Resell Reserve – Inventory</h1>
+    <div class="container">
+        <h1>📦 Resell Reserve</h1>
 
-  <div class="form">
-    <input id="item-name" placeholder="Item name">
-    <input id="item-stock" type="number" placeholder="Stock">
-    <button onclick="addItem()">Add Item</button>
-  </div>
+        <input id="item-name" placeholder="Item name">
+        <input id="item-stock" type="number" placeholder="Stock">
 
-  <h2>Current Inventory</h2>
-  <ul id="inventory-list"></ul>
+        <button onclick="addItem()">Add Item</button>
 
-  <script type="module" src="app.js"></script>
+        <h2>Current Inventory</h2>
+        <ul id="inventory-list"></ul>
+    </div>
+
+    <script src="app.js"></script>
 </body>
 </html>
