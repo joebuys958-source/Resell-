@@ -1,0 +1,262 @@
+/*
+ FULL PREMIUM INVENTORY APP (NO BACKEND, WORKS ON GITHUB PAGES)
+ Includes:
+ - Sidebar Navigation
+ - Overview Dashboard
+ - Inventory Manager (your existing one, improved)
+ - Expenses Manager
+ - Analytics (Chart.js)
+ - Red/Black Premium Theme
+ - Vinted‑Style Add Item Form (multi‑image upload + autocomplete)
+*/
+
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { Bar, Pie } from 'react-chartjs-2';
+import { Plus, BarChart2, Layers, Home, Wallet, Settings, Camera, Trash } from 'lucide-react';
+
+/********************
+  GLOBAL STYLES
+********************/
+const theme = {
+  red: "#e50914",
+  dark: "#0b0b0b",
+  card: "#111",
+  border: "#222",
+  text: "#fff"
+};
+
+const containerStyle = {
+  backgroundColor: theme.dark,
+  color: theme.text,
+  minHeight: "100vh",
+  display: "flex",
+  fontFamily: 'Inter, sans-serif'
+};
+
+/********************
+   SIDEBAR COMPONENT
+********************/
+function Sidebar({ page, setPage }) {
+  const Link = ({ name, icon }) => (
+    <div
+      onClick={() => setPage(name)}
+      className={`flex items-center gap-3 p-4 cursor-pointer transition ${
+        page === name ? 'bg-red-600 text-white' : 'hover:bg-red-700/40'
+      }`}
+    >
+      {icon}
+      <span className="text-lg">{name}</span>
+    </div>
+  );
+
+  return (
+    <div className="w-64 bg-black border-r border-red-700 flex flex-col">
+      <h1 className="text-3xl font-bold p-6 text-red-600">RR</h1>
+      <Link name="Overview" icon={<Home/>} />
+      <Link name="Inventory" icon={<Layers/>} />
+      <Link name="Expenses" icon={<Wallet/>} />
+      <Link name="Analytics" icon={<BarChart2/>} />
+      <Link name="Settings" icon={<Settings/>} />
+    </div>
+  );
+}
+
+/********************
+     OVERVIEW PAGE
+********************/
+function Overview({ items }) {
+  const totalValue = items.reduce((sum, i) => sum + Number(i.price), 0);
+  const soldCount = items.filter(i => i.sold).length;
+  const totalProfit = items.reduce((sum, i) => sum + (i.profit || 0), 0);
+
+  return (
+    <div className="p-10 w-full">
+      <h1 className="text-4xl font-bold mb-8">Dashboard Overview</h1>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <StatCard title="Total Inventory Value" value={`£${totalValue}`}/>
+        <StatCard title="Items Sold" value={soldCount}/>
+        <StatCard title="Total Profit" value={`£${totalProfit}`}/>
+      </div>
+    </div>
+  );
+}
+
+function StatCard({ title, value }) {
+  return (
+    <div className="bg-red-900/20 rounded-xl p-6 border border-red-800 shadow-xl">
+      <div className="text-red-400 text-sm">{title}</div>
+      <div className="text-white text-3xl font-bold mt-2">{value}</div>
+    </div>
+  );
+}
+
+/********************
+   INVENTORY MANAGER
+********************/
+function Inventory({ items, setItems }) {
+  const [showForm, setShowForm] = useState(false);
+  const [form, setForm] = useState({
+    brand: '', category: '', price: '', cost: '', images: [], sold: false
+  });
+
+  const BRAND_LIST = ["Nike", "Adidas", "Zara", "H&M", "North Face", "Carhartt", "Stone Island", "New Balance", "ASOS"];
+
+  const filteredBrands = form.brand
+    ? BRAND_LIST.filter(b => b.toLowerCase().includes(form.brand.toLowerCase()))
+    : [];
+
+  const addItem = () => {
+    const newItem = {
+      ...form,
+      id: Date.now(),
+      profit: form.sold ? form.price - form.cost : 0
+    };
+    setItems([...items, newItem]);
+    setForm({ brand: '', category: '', price: '', cost: '', images: [] });
+    setShowForm(false);
+  };
+
+  const uploadImages = (e) => {
+    const files = Array.from(e.target.files);
+
+    const newImgs = files.map(file => ({
+      url: URL.createObjectURL(file),
+      file
+    }));
+
+    setForm({ ...form, images: [...form.images, ...newImgs] });
+  };
+
+  return (
+    <div className="p-10 w-full">
+      <div className="flex justify-between mb-8">
+        <h1 className="text-4xl font-bold">Inventory</h1>
+        <button onClick={() => setShowForm(true)} className="px-5 py-2 bg-red-600 hover:bg-red-700 rounded-lg flex items-center gap-2">
+          <Plus/> Add Item
+        </button>
+      </div>
+
+      {/* ITEM GRID */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {items.map(item => (
+          <div key={item.id} className="bg-red-900/10 border border-red-900 rounded-xl p-4">
+            {item.images[0] && (
+              <img src={item.images[0].url} className="rounded-lg mb-3 h-40 w-full object-cover" />
+            )}
+            <div className="text-xl font-bold">{item.brand}</div>
+            <div className="opacity-70">{item.category}</div>
+            <div className="mt-3">Price: £{item.price}</div>
+            <div>Cost: £{item.cost}</div>
+            {item.sold && <div className="text-green-400 font-bold">Profit: £{item.profit}</div>}
+          </div>
+        ))}
+      </div>
+
+      {/* ADD ITEM FORM */}
+      {showForm && (
+        <div className="fixed inset-0 bg-black/70 flex justify-center items-center p-4">
+          <div className="bg-black border border-red-900 p-6 rounded-xl max-w-lg w-full">
+            <h2 className="text-2xl font-bold mb-4">Add Item</h2>
+
+            <input
+              placeholder="Brand"
+              value={form.brand}
+              onChange={(e) => setForm({ ...form, brand: e.target.value })}
+              className="w-full p-3 rounded bg-red-900/20 mb-2"
+            />
+
+            {/* AUTOFILL DROPDOWN */}
+            {filteredBrands.length > 0 && (
+              <div className="bg-black border border-red-700 rounded mb-2">
+                {filteredBrands.map(b => (
+                  <div
+                    key={b}
+                    onClick={() => setForm({ ...form, brand: b })}
+                    className="p-2 hover:bg-red-700/40 cursor-pointer"
+                  >
+                    {b}
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <input
+              placeholder="Category"
+              value={form.category}
+              onChange={(e) => setForm({ ...form, category: e.target.value })}
+              className="w-full p-3 rounded bg-red-900/20 mb-2"
+            />
+
+            {/* PRICE + COST */}
+            <div className="flex gap-2">
+              <input
+                type="number"
+                placeholder="Cost"
+                value={form.cost}
+                onChange={(e) => setForm({ ...form, cost: Number(e.target.value) })}
+                className="w-full p-3 rounded bg-red-900/20 mb-2"
+              />
+              <input
+                type="number"
+                placeholder="Sale Price"
+                value={form.price}
+                onChange={(e) => setForm({ ...form, price: Number(e.target.value) })}
+                className="w-full p-3 rounded bg-red-900/20 mb-2"
+              />
+            </div>
+
+            {/* IMAGE UPLOAD */}
+            <label className="w-full bg-red-700/40 p-3 rounded-lg flex items-center gap-2 cursor-pointer justify-center mb-2">
+              <Camera/> Upload Images
+              <input type="file" multiple className="hidden" onChange={uploadImages} />
+            </label>
+
+            {/* IMAGE PREVIEWS */}
+            <div className="flex gap-2 overflow-x-auto mb-2">
+              {form.images.map((img, i) => (
+                <div key={i} className="relative">
+                  <img src={img.url} className="h-20 w-20 object-cover rounded" />
+                  <button
+                    className="absolute top-1 right-1 bg-red-800 rounded-full p-1"
+                    onClick={() => setForm({ ...form, images: form.images.filter((_, x) => x !== i) })}
+                  >
+                    <Trash className="h-3 w-3" />
+                  </button>
+                </div>
+              ))}
+            </div>
+
+            <button onClick={addItem} className="w-full bg-red-600 p-3 rounded-lg mt-2">Save Item</button>
+            <button onClick={() => setShowForm(false)} className="w-full bg-red-900 p-3 rounded-lg mt-2">Cancel</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/********************
+      EXPENSE MANAGER
+********************/
+function Expenses({ expenses, setExpenses }) {
+  return (
+    <div className="p-10 w-full text-white">
+      <h1 className="text-4xl font-bold mb-6">Expenses</h1>
+      <div className="opacity-60">(Feature expanding soon)</div>
+    </div>
+  );
+}
+
+/********************
+      ANALYTICS PAGE
+********************/
+function Analytics({ items }) {
+  const sold = items.filter(i => i.sold);
+
+  const data = {
+    labels: sold.map(i => i.brand),
+    datasets: [{
+      label: 'Profit per Item',
+      data: sold.map(i => i.profit),
