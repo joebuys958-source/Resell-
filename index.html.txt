@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inventory Manager</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ====== SLIDING SIDEBAR ====== -->
+<div id="sidebar" class="sidebar">
+  <div class="sidebar-header">
+    <h2>Menu</h2>
+    <button class="close-btn" onclick="toggleSidebar()">×</button>
+  </div>
+
+  <ul>
+    <li onclick="openPage('dashboard')">📊 Dashboard</li>
+    <li onclick="openPage('inventory')">📦 Inventory</li>
+    <li onclick="openPage('expenses')">💰 Expenses</li>
+    <li onclick="backupData()">⬆ Export Backup</li>
+    <li onclick="restoreData()">⬇ Import Backup</li>
+  </ul>
+</div>
+
+<!-- ====== TOP BAR ====== -->
+<header>
+  <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+  <h1>Inventory Manager</h1>
+  <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+</header>
+
+<!-- ====== MAIN CONTENT ====== -->
+<main id="content">
+
+  <!-- DASHBOARD -->
+  <section id="dashboard" class="page active">
+    <h2>Dashboard Overview</h2>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>Total Items</h3>
+        <p id="statTotalItems">0</p>
+      </div>
+      <div class="stat-card">
+        <h3>Total Value</h3>
+        <p id="statTotalValue">£0</p>
+      </div>
+      <div class="stat-card">
+        <h3>Items Sold</h3>
+        <p id="statItemsSold">0</p>
+      </div>
+      <div class="stat-card">
+        <h3>Total Profit</h3>
+        <p id="statTotalProfit">£0</p>
+      </div>
+    </div>
+
+    <canvas id="salesChart"></canvas>
+  </section>
+
+  <!-- INVENTORY -->
+  <section id="inventory" class="page">
+    <div class="page-header">
+      <h2>Inventory</h2>
+      <button class="add-btn" onclick="openForm()">+ Add Item</button>
+    </div>
+
+    <input id="searchInput" oninput="searchItems()" placeholder="Search brand, category, size..." />
+
+    <div id="inventoryGrid" class="inventory-grid"></div>
+  </section>
+
+  <!-- EXPENSES -->
+  <section id="expenses" class="page">
+    <h2>Expenses Manager</h2>
+
+    <div class="expense-form">
+      <input id="expenseName" placeholder="Expense name" />
+      <input id="expenseAmount" type="number" placeholder="Amount (£)" />
+      <button onclick="addExpense()">Add</button>
+    </div>
+
+    <ul id="expenseList"></ul>
+
+    <p class="total-expenses">Total: £<span id="totalExpenses">0</span></p>
+  </section>
+</main>
+
+<!-- ====== ADD/EDIT ITEM FORM ====== -->
+<div id="itemForm" class="form-bg hidden">
+  <div class="form-card">
+    <h2 id="formTitle">Add Item</h2>
+
+    <input id="brand" placeholder="Brand" list="brands" />
+    <input id="category" placeholder="Category" list="categories" />
+
+    <select id="size">
+      <option value="">Select Size</option>
+      <option>XS</option><option>S</option><option>M</option>
+      <option>L</option><option>XL</option><option>XXL</option>
+    </select>
+
+    <input id="colour" placeholder="Colour" />
+    <input id="sku" placeholder="SKU (optional)" />
+    <input id="cost" type="number" placeholder="Cost (£)" />
+    <input id="price" type="number" placeholder="Price (£)" />
+
+    <textarea id="notes" placeholder="Notes..."></textarea>
+
+    <label>Images (up to 5)</label>
+    <input id="images" type="file" multiple accept="image/*" />
+
+    <div id="imagePreview" class="img-preview"></div>
+
+    <div class="form-buttons">
+      <button onclick="saveItem()">Save</button>
+      <button class="cancel" onclick="closeForm()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- AUTOFILL OPTIONS -->
+<datalist id="brands">
+  <option>Nike</option><option>Adidas</option><option>Zara</option>
+  <option>H&M</option><option>Uniqlo</option><option>New Balance</option>
+  <option>North Face</option><option>Carhartt</option><option>ASOS</option>
+</datalist>
+
+<datalist id="categories">
+  <option>T-Shirt</option><option>Hoodie</option><option>Jeans</option>
+  <option>Tracksuit</option><option>Jacket</option><option>Shirt</option>
+</datalist>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
