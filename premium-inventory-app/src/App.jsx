@@ -1,1 +1,0 @@
-export default function App(){ return(<div style={{padding:'2rem',fontFamily:'sans-serif'}}><h1>Premium Inventory App</h1><p>Your full system will go here.</p></div>) }
