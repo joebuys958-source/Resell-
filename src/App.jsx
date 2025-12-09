@@ -1,9 +1,14 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
-import Dashboard from "./pages/Dashboard.jsx";
-import Inventory from "./pages/Inventory.jsx";
-import Expenses from "./pages/Expenses.jsx";
+import Login from "./pages/Login.jsx";
+
+function App() {
+  return <Login />;
+}
+
+export default App;
+
 import Analytics from "./pages/Analytics.jsx";
 import RequireAuth from "./auth/RequireAuth.jsx";
 
